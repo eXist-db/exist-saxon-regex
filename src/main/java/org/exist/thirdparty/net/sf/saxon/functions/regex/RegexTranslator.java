@@ -132,14 +132,14 @@ public abstract class RegexTranslator {
         do {
             if ("0123456789".indexOf(curChar) < 0)
                 throw makeException("expected digit in quantifier");
-            buf.append(curChar);
+            buf.append(""+curChar);
             advance();
         } while (curChar != ',' && curChar != '}');
         return buf;
     }
 
     protected void copyCurChar() {
-        result.append(curChar);
+        result.append(new char[]{curChar});
         advance();
     }
 
@@ -322,8 +322,8 @@ public abstract class RegexTranslator {
                 max1--;
             }
             if (max1 >= min1) {
-                highRanges.append(min1);
-                highRanges.append(max1);
+                highRanges.append(new char[]{min1});
+                highRanges.append(new char[]{max1});
             }
         }
         return highRanges.toString();
@@ -339,20 +339,20 @@ public abstract class RegexTranslator {
             char max2 = UTF16CharacterSet.lowSurrogate(r.getMax());
             if (min1 == max1) {
                 if (min2 != UTF16CharacterSet.SURROGATE2_MIN || max2 != UTF16CharacterSet.SURROGATE2_MAX) {
-                    lowRanges.append(min1);
-                    lowRanges.append(min2);
-                    lowRanges.append(max2);
+                    lowRanges.append(new char[]{min1});
+                    lowRanges.append(new char[]{min2});
+                    lowRanges.append(new char[]{max2});
                 }
             } else {
                 if (min2 != UTF16CharacterSet.SURROGATE2_MIN) {
-                    lowRanges.append(min1);
-                    lowRanges.append(min2);
-                    lowRanges.append(UTF16CharacterSet.SURROGATE2_MAX);
+                    lowRanges.append(new char[]{min1});
+                    lowRanges.append(new char[]{min2});
+                    lowRanges.append(new char[]{UTF16CharacterSet.SURROGATE2_MAX});
                 }
                 if (max2 != UTF16CharacterSet.SURROGATE2_MAX) {
-                    lowRanges.append(max1);
-                    lowRanges.append(UTF16CharacterSet.SURROGATE2_MIN);
-                    lowRanges.append(max2);
+                    lowRanges.append(new char[]{max1});
+                    lowRanges.append(new char[]{UTF16CharacterSet.SURROGATE2_MIN});
+                    lowRanges.append(new char[]{max2});
                 }
             }
         }

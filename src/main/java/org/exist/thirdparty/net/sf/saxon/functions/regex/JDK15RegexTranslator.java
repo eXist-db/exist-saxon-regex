@@ -163,15 +163,15 @@ public class JDK15RegexTranslator extends RegexTranslator {
         }
 
         void output(FastStringBuffer buf) {
-            buf.append('[');
+            buf.append("[");
             inClassOutput(buf);
-            buf.append(']');
+            buf.append("]");
         }
 
         void outputComplement(FastStringBuffer buf) {
             buf.append("[^");
             inClassOutput(buf);
-            buf.append(']');
+            buf.append("]");
         }
 
         abstract void inClassOutput(FastStringBuffer buf);
@@ -200,8 +200,8 @@ public class JDK15RegexTranslator extends RegexTranslator {
 
         void inClassOutput(FastStringBuffer buf) {
             if (isJavaMetaChar(c)) {
-                buf.append('\\');
-                buf.append((char) c);
+                buf.append("\\");
+                buf.append(new char[]{(char) c} );
             } else {
                 switch (c) {
                     case '\r':
@@ -260,12 +260,12 @@ public class JDK15RegexTranslator extends RegexTranslator {
 
         void inClassOutput(FastStringBuffer buf) {
             if (isJavaMetaChar(lower)) {
-                buf.append('\\');
+                buf.append("\\");
             }
             buf.appendWideChar(lower);
-            buf.append('-');
+            buf.append("-");
             if (isJavaMetaChar(upper)) {
-                buf.append('\\');
+                buf.append("\\");
             }
             buf.appendWideChar(upper);
         }
@@ -282,13 +282,13 @@ public class JDK15RegexTranslator extends RegexTranslator {
         void inClassOutput(FastStringBuffer buf) {
             buf.append("\\p{");
             buf.append(name);
-            buf.append('}');
+            buf.append("}");
         }
 
         void outputComplement(FastStringBuffer buf) {
             buf.append("\\P{");
             buf.append(name);
-            buf.append('}');
+            buf.append("}");
         }
 
         // TODO: Since JDK 1.5, the code should in theory be able to use Java character classes directly, without expansion.
@@ -308,18 +308,18 @@ public class JDK15RegexTranslator extends RegexTranslator {
         }
 
         void output(FastStringBuffer buf) {
-            buf.append('[');
+            buf.append("[");
             cc1.output(buf);
             buf.append("&&");
             cc2.outputComplement(buf);
-            buf.append(']');
+            buf.append("]");
         }
 
         void outputComplement(FastStringBuffer buf) {
-            buf.append('[');
+            buf.append("[");
             cc1.outputComplement(buf);
             cc2.output(buf);
-            buf.append(']');
+            buf.append("]");
         }
     }
 
@@ -349,11 +349,11 @@ public class JDK15RegexTranslator extends RegexTranslator {
 //            if (suppressCaseBlindness) {
 //                buf.append("(?-i:");
 //            }
-            buf.append('[');
+            buf.append("[");
             for (int i = 0, len = members.size(); i < len; i++) {
                 members.get(i).output(buf);
             }
-            buf.append(']');
+            buf.append("]");
 //            if (suppressCaseBlindness) {
 //                buf.append(")");
 //            }
@@ -373,7 +373,7 @@ public class JDK15RegexTranslator extends RegexTranslator {
             for (CharClass cc : members) {
                 if (!(cc instanceof SimpleCharClass)) {
                     if (first) {
-                        buf.append('[');
+                        buf.append("[");
                         first = false;
                     } else {
                         buf.append("&&");
@@ -387,7 +387,7 @@ public class JDK15RegexTranslator extends RegexTranslator {
                 buf.appendWideChar(UTF16CharacterSet.NONBMP_MAX);
                 buf.append("]");
             } else {
-                buf.append(']');
+                buf.append("]");
             }
         }
     }
@@ -499,7 +499,7 @@ public class JDK15RegexTranslator extends RegexTranslator {
                     copyCurChar();
                     return true;
                 }
-                result.append('\\');
+                result.append("\\");
                 break;
             default:
                 if (caseBlind) {

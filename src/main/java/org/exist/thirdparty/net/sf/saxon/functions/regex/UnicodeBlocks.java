@@ -67,7 +67,7 @@ public class UnicodeBlocks {
                     // no action
                     break;
                 default:
-                    fsb.append(c);
+                    fsb.append(new char[]{c});
             }
         }
         return fsb.toString();
