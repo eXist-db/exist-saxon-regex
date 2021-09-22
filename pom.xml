@@ -3,7 +3,7 @@
 
     <groupId>org.exist-db</groupId>
     <artifactId>exist-saxon-regex</artifactId>
-    <version>9.4.0-9.e2-SNAPSHOT</version>
+    <version>10.6-SNAPSHOT</version>
 
     <name>Saxon Regular Expressions</name>
     <description>Saxon Regular Expressions code used by eXist-db</description>
