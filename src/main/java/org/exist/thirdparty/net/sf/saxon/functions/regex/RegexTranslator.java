@@ -132,7 +132,7 @@ public abstract class RegexTranslator {
         do {
             if ("0123456789".indexOf(curChar) < 0)
                 throw makeException("expected digit in quantifier");
-            buf.append(""+curChar);
+            buf.append(new char[]{curChar});
             advance();
         } while (curChar != ',' && curChar != '}');
         return buf;
