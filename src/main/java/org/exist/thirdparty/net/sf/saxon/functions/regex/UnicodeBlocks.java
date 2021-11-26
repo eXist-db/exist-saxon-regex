@@ -20,9 +20,10 @@ package org.exist.thirdparty.net.sf.saxon.functions.regex;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.lib.ParseOptions;
 import net.sf.saxon.lib.Validation;
+import net.sf.saxon.om.AllElementsSpaceStrippingRule;
 import net.sf.saxon.om.AxisInfo;
-import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.om.TreeInfo;
 import net.sf.saxon.pattern.NameTest;
 import net.sf.saxon.pattern.NodeKindTest;
 import net.sf.saxon.trans.XPathException;
@@ -67,7 +68,7 @@ public class UnicodeBlocks {
                     // no action
                     break;
                 default:
-                    fsb.append(c);
+                    fsb.append(new char[]{c});
             }
         }
         return fsb.toString();
@@ -82,15 +83,15 @@ public class UnicodeBlocks {
 
         ParseOptions options = new ParseOptions();
         options.setSchemaValidationMode(Validation.SKIP);
-        options.setStripSpace(Whitespace.ALL);
-        DocumentInfo doc;
+        options.setSpaceStrippingRule(AllElementsSpaceStrippingRule.getInstance());
+        TreeInfo doc;
         try {
-            doc = config.buildDocument(new StreamSource(in, "unicodeBlocks.xml"), options);
+            doc = config.buildDocumentTree(new StreamSource(in, "unicodeBlocks.xml"), options);
         } catch (XPathException e) {
             throw new RegexSyntaxException("Failed to process unicodeBlocks.xml: " + e.getMessage());
         }
 
-        AxisIterator iter = doc.iterateAxis(AxisInfo.DESCENDANT, new NameTest(Type.ELEMENT, "", "block", config.getNamePool()));
+        AxisIterator iter = doc.getRootNode().iterateAxis(AxisInfo.DESCENDANT, new NameTest(Type.ELEMENT, "", "block", config.getNamePool()));
         while (true) {
             NodeInfo item = iter.next();
             if (item == null) {
