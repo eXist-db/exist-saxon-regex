@@ -1,5 +1,9 @@
 # Saxon Regular Expressions code used by eXist-db
 
+[![Java 8](https://img.shields.io/badge/java-8+-blue.svg)](https://adoptopenjdk.net/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.exist-db/exist-saxon-regex/badge.svg)](https://search.maven.org/search?q=g:org.exist-db)
+
 This is a slight modification of the regular expressions code from the package `net.sf.saxon.functions.regex` of Saxon-HE 9.4.0-9.
 The original code is Copyright Saxonica Limited and is released by them under the [Mozilla Public License 1.1](https://www.mozilla.org/en-US/MPL/1.1/).
 
